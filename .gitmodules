@@ -1,0 +1,3 @@
+[submodule "ProcessPrivileges"]
+	path = ProcessPrivileges
+	url = https://github.com/ViRb3/ProcessPrivileges
