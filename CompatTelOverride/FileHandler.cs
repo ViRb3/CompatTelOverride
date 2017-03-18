@@ -32,20 +32,21 @@ namespace CompatTelOverride
 
         private static void HandleExistingFile()
         {
+            Process[] processes = Process.GetProcessesByName("CompatTelRunner");
+
+            foreach (Process process in processes)
+            {
+                if (string.Equals(process.MainModule.FileName, Program.RemoteFile, StringComparison.OrdinalIgnoreCase))
+                {
+                    process.Kill();
+                    process.WaitForExit();
+                }
+            }
+
             if (!File.Exists(Program.RemoteFileBackup))
                 File.Move(Program.RemoteFile, Program.RemoteFileBackup);
             else
-            {
-                Process[] processes = Process.GetProcessesByName("CompatTelRunner");
-                
-                foreach (Process process in processes)
-                {
-                    if(string.Equals(process.MainModule.FileName, Program.RemoteFile, StringComparison.OrdinalIgnoreCase))
-                        process.Kill();
-                }
-
                 File.Delete(Program.RemoteFile);
-            }
         }
 
         private static bool SetStartup()
@@ -99,6 +100,9 @@ namespace CompatTelOverride
 
                 foreach (FileSystemAccessRule rule in systemAccess.GetAccessRules(true, false, typeof(SecurityIdentifier)))
                     access.AddAccessRule(rule); // copy explict rules from system file
+
+                // deny TrustedInstaller write access
+                access.SetAccessRule(new FileSystemAccessRule(siTrustedInstaller, FileSystemRights.ReadAndExecute, AccessControlType.Allow));
 
                 File.SetAccessControl(Program.RemoteFile, access);
 
