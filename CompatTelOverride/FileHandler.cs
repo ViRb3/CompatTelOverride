@@ -22,10 +22,10 @@ namespace CompatTelOverride
             }
 
             File.Copy(Program.ThisFile, Program.RemoteFile);
-            SetStartup();
 
-            if (!RestoreOwnership())
-                return false;
+            SetStartup();
+            RestorePermissions();
+            RestoreBackupPermissions();
 
             return true;
         }
@@ -83,20 +83,49 @@ namespace CompatTelOverride
             return true;
         }
 
-        private static bool RestoreOwnership()
+        private static bool RestorePermissions()
         {
             using (new PrivilegeEnabler(Process.GetCurrentProcess(), Privilege.Restore))
             {
-                SecurityIdentifier si = (SecurityIdentifier)new NTAccount("NT SERVICE\\TrustedInstaller").Translate(typeof(SecurityIdentifier));
+                SecurityIdentifier siTrustedInstaller = (SecurityIdentifier)new NTAccount("NT SERVICE\\TrustedInstaller").Translate(typeof(SecurityIdentifier));
+
+                var systemAccess = File.GetAccessControl(Program.CmdFile);
+                var access = File.GetAccessControl(Program.RemoteFile);
+
+                access.SetAccessRuleProtection(true, false); // remove inherited rules
+
+                foreach (FileSystemAccessRule rule in access.GetAccessRules(true, false, typeof(SecurityIdentifier)))
+                        access.RemoveAccessRule(rule); // remove explict rules
+
+                foreach (FileSystemAccessRule rule in systemAccess.GetAccessRules(true, false, typeof(SecurityIdentifier)))
+                    access.AddAccessRule(rule); // copy explict rules from system file
+
+                File.SetAccessControl(Program.RemoteFile, access);
+
+                access.SetOwner(siTrustedInstaller);
+                File.SetAccessControl(Program.RemoteFile, access);
+            }
+
+            return true;
+        }
+
+        private static bool RestoreBackupPermissions()
+        {
+            using (new PrivilegeEnabler(Process.GetCurrentProcess(), Privilege.Restore))
+            {
+                SecurityIdentifier si = WindowsIdentity.GetCurrent().User;
                 if (si == null)
                 {
                     MessageBox.Show("Could not get current user ID!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
 
-                var access = File.GetAccessControl(Program.RemoteFile);
-                access.SetOwner(si);
-                File.SetAccessControl(Program.RemoteFile, access);
+                var access = File.GetAccessControl(Program.RemoteFileBackup);
+                SecurityIdentifier siTrustedInstaller = (SecurityIdentifier) new NTAccount("NT SERVICE\\TrustedInstaller").Translate(typeof(SecurityIdentifier));
+
+                access.RemoveAccessRule(new FileSystemAccessRule(si, FileSystemRights.FullControl, AccessControlType.Allow));
+                access.SetOwner(siTrustedInstaller);
+                File.SetAccessControl(Program.RemoteFileBackup, access);
             }
 
             return true;

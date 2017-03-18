@@ -13,6 +13,7 @@ namespace CompatTelOverride
         public static readonly string RemoteFile = Path.Combine(Environment.SystemDirectory, "CompatTelRunner.exe");
         public static readonly string RemoteFileBackup = Path.Combine(Environment.SystemDirectory, "CompatTelRunner.exe.BAK");
         public static readonly string ThisFile = Assembly.GetEntryAssembly().Location;
+        public static readonly string CmdFile = Path.Combine(Environment.SystemDirectory, "cmd.exe");
 
         private static bool IsAdministrator()
         {
