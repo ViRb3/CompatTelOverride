@@ -1,0 +1,1 @@
+This project uses 'ProcessPrivileges' by nicklowe, licensed under the Microsoft Public License.
