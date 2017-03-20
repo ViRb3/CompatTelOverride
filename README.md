@@ -1,19 +1,34 @@
+### CompatTelOverride v2 - more persistant than ever!
+
 ## Intro
 CompatTelRunner telemetry runs very frequently and drains **a lot** of system resources. Even if the file is deleted, Windows will re-install it in a while.
 
 ## Description
-This executable has two functions - an installer, when run outside of *'System32'*, and a 'dummy' that sleeps forever once it's there.
+This project has three modules: an installer, an override (dummy exe), and a service.
 
-When installing, this file will replace *'CompatTelRunner.exe'* with itself in order to prevent telemetry. The new file will have the same permissions as other system files except TrustedInstaller won't be allowed to change it, in hopes that Windows won't automatically install the original file again. The new file is also added to start-up to make it even harder for Windows, by having it replace a running executable.
+The installer (*'CompatTelOverride.exe'*) will manage installation and uninstallation of this project.
+Once installed, the service (*'CompatTelWatch.exe'*) will replace the original *'CompatTelRunner.exe'* with a dummy one that, if started, will sleep forever, prevening telemetry.
+This will happen every boot, so even if Windows replaces the file, it will get reverted. The service also locks the telemetry runner, so it doesn't get modified while Windows is running.
 
 ## Features
 * Automatic ownership/permission handling
-* Proper replace with security settings restored
-* Deny TrustedInstaller write access
-* Automatic start-up
+* All modified files retain high security permissions
 * Automatic backup
-* Proper error handling and helpful messages
+* Uninstallation support
 
+## How to install
+1. Run *'CompatTelOverride.exe'* as Administrator
+2. Click 'Yes' when prompted to install.
+
+## How to uninstall
+1. If already installed, re-run *'CompatTelOverride.exe'* as Administrator
+2. Click 'Yes' when prompted to uninstall.
+3. Click 'No' when prompted to re-install.
+
+## How to force uninstall
+1. Run *'CompatTelOverride.exe'*, as Administrator, with argument: *'/uninstall'*
+
+---
 
 ## Comparison
 
@@ -22,3 +37,8 @@ When installing, this file will replace *'CompatTelRunner.exe'* with itself in o
 
 #### After:
 ![](https://i.imgur.com/9o0Kp7x.png)
+
+---
+
+## Note to developers
+The two dependancy DLLs are intended to be merged into the main executables before deployment. If you wish to use them as-is, some code tweaks will be required.

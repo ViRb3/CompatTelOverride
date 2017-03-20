@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompatTelOverride", "Compat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessPrivileges", "ProcessPrivileges\ProcessPrivileges\ProcessPrivileges.csproj", "{410CAEE5-D287-4A18-9B38-BB87397D218D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompatTelWatch", "CompatTelWatch\CompatTelWatch.csproj", "{606D06F4-76DE-47B3-AC1D-079D1720C50B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompatTelHelper", "CompatTelHelper\CompatTelHelper.csproj", "{9CFFEA8C-C174-4424-AAB3-6C84693D913B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{410CAEE5-D287-4A18-9B38-BB87397D218D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{410CAEE5-D287-4A18-9B38-BB87397D218D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{410CAEE5-D287-4A18-9B38-BB87397D218D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{606D06F4-76DE-47B3-AC1D-079D1720C50B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{606D06F4-76DE-47B3-AC1D-079D1720C50B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{606D06F4-76DE-47B3-AC1D-079D1720C50B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{606D06F4-76DE-47B3-AC1D-079D1720C50B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CFFEA8C-C174-4424-AAB3-6C84693D913B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CFFEA8C-C174-4424-AAB3-6C84693D913B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CFFEA8C-C174-4424-AAB3-6C84693D913B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CFFEA8C-C174-4424-AAB3-6C84693D913B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

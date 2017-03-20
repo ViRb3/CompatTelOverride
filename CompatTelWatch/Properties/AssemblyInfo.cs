@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CompatTelOverride")]
-[assembly: AssemblyDescription("Overrides the CompatTelRunner telemetry")]
+[assembly: AssemblyTitle("WatchService")]
+[assembly: AssemblyDescription("Checks for changes in CompatTelRunner and reverts them")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CompatTelOverride")]
+[assembly: AssemblyProduct("WatchService")]
 [assembly: AssemblyCopyright("Copyright 2017 ViRb3")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("bce604e1-6b37-4773-8a68-527c06bc409b")]
+[assembly: Guid("606d06f4-76de-47b3-ac1d-079d1720c50b")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
