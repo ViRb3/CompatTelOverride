@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.ServiceProcess;
 using System.Threading;
@@ -14,6 +15,15 @@ namespace CompatTelOverride
     class Program
     {
         public static readonly string ThisFile = Assembly.GetEntryAssembly().Location;
+
+        [DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool DeleteFile(string name);
+
+        private static bool Unblock(string fileName)
+        {
+            return DeleteFile(fileName + ":Zone.Identifier");
+        }
 
         private static bool IsAdministrator()
         {
@@ -92,6 +102,7 @@ namespace CompatTelOverride
                 UninstallWatch();
 
             File.Copy("CompatTelWatch.exe", Common.WatchFile);
+            Unblock(Common.WatchFile);
             FileUtils.RestorePermissions(Common.WatchFile);
 
             var installer = Process.Start(Common.InstallUtil, Common.WatchFile);
@@ -115,6 +126,7 @@ namespace CompatTelOverride
                 FileUtils.TakeOwnership(Common.RemoteFileOverride);
 
             File.Copy(ThisFile, Common.RemoteFileOverride, true);
+            Unblock(Common.RemoteFileOverride);
             FileUtils.RestorePermissions(Common.RemoteFileOverride);
         }
 
