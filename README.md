@@ -7,7 +7,7 @@ CompatTelRunner telemetry runs very frequently and drains **a lot** of system re
 This project has three modules: an installer, an override (dummy exe), and a service.
 
 The installer (*'CompatTelOverride.exe'*) will manage installation and uninstallation of this project.
-Once installed, the service (*'CompatTelWatch.exe'*) will replace the original *'CompatTelRunner.exe'* with a dummy one that, if started, will sleep forever, prevening telemetry.
+Once installed, the service (*'CompatTelWatch.exe'*) will replace the original *'CompatTelRunner.exe'* with a dummy one that, if started, will sleep forever, preventing telemetry.
 This will happen every boot, so even if Windows replaces the file, it will get reverted. The service also locks the telemetry runner, so it doesn't get modified while Windows is running.
 
 ## Features
