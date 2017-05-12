@@ -12,7 +12,7 @@ using CompatTelHelper;
 
 namespace CompatTelOverride
 {
-    class Program
+    internal static class Program
     {
         public static readonly string ThisFile = Assembly.GetEntryAssembly().Location;
 
@@ -34,7 +34,7 @@ namespace CompatTelOverride
 
         private static void Main(string[] args)
         {
-            if (args != null && args.Length > 0 && args[0] == "/uninstall")
+            if (args?.Length > 0 && args[0] == "/uninstall")
             {
                 Uninstall();
                 return;
@@ -61,7 +61,7 @@ namespace CompatTelOverride
             while (true)
             {
                 Thread.Sleep(5000);
-            }  
+            }
         }
 
         private static void Install()
@@ -98,7 +98,7 @@ namespace CompatTelOverride
 
         private static void InstallWatch()
         {
-            if (File.Exists(Common.WatchFile))   
+            if (File.Exists(Common.WatchFile))
                 UninstallWatch();
 
             File.Copy("CompatTelWatch.exe", Common.WatchFile);
