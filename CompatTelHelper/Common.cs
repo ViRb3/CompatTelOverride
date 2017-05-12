@@ -15,7 +15,6 @@ namespace CompatTelHelper
         public static readonly string CmdFile = Path.Combine(Environment.SystemDirectory, "cmd.exe");
 
         public static readonly string InstallUtil = Path.Combine(System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory(), "installutil.exe");
-        
 
         public static void KillProcesses(string name)
         {
@@ -24,8 +23,8 @@ namespace CompatTelHelper
 
             foreach (Process process in processes)
             {
-                if (string.Equals(process.MainModule.FileName, RemoteFile, StringComparison.OrdinalIgnoreCase) &&
-                    process.Id != thisProcess.Id)
+                if (string.Equals(process.MainModule.FileName, RemoteFile, StringComparison.OrdinalIgnoreCase)
+                    && process.Id != thisProcess.Id)
                 {
                     process.Kill();
                     process.WaitForExit();

@@ -8,7 +8,7 @@ using ProcessPrivileges;
 
 namespace CompatTelHelper
 {
-    public class FileUtils
+    public static class FileUtils
     {
         public static bool TakeOwnership(string file)
         {
@@ -43,10 +43,10 @@ namespace CompatTelHelper
                 access.SetAccessRuleProtection(true, false); // remove inherited rules
 
                 foreach (FileSystemAccessRule rule in access.GetAccessRules(true, false, typeof(SecurityIdentifier)))
-                    access.RemoveAccessRule(rule); // remove explict rules
+                    access.RemoveAccessRule(rule); // remove explicit rules
 
                 foreach (FileSystemAccessRule rule in systemAccess.GetAccessRules(true, false, typeof(SecurityIdentifier)))
-                    access.AddAccessRule(rule); // copy explict rules from system file
+                    access.AddAccessRule(rule); // copy explicit rules from system file
 
                 // deny TrustedInstaller write access
                 //access.SetAccessRule(new FileSystemAccessRule(siTrustedInstaller, FileSystemRights.ReadAndExecute, AccessControlType.Allow));
