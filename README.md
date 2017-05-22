@@ -10,6 +10,9 @@ The installer (*'CompatTelOverride.exe'*) will manage installation and uninstall
 Once installed, the service (*'CompatTelWatch.exe'*) will replace the original *'CompatTelRunner.exe'* with a dummy one that, if started, will sleep forever, preventing telemetry.
 This will happen every boot, so even if Windows replaces the file, it will get reverted. The service also locks the telemetry runner, so it doesn't get modified while Windows is running.
 
+## Why I made this
+It all started when my father and two grandmothers began complaining about their computers being unusable. When I diagnosed them, on each of those 3 machines I noticed something identical - *'CompatTelRunner'* had taken almost all of their limited CPU, HDD and Network resources. While I understand the reason behind this functionality, it's unbearable to watch your computer frozen and unusable for up to 5 minutes every now and then.
+
 ## Features
 * Automatic ownership/permission handling
 * All modified files retain high security permissions
