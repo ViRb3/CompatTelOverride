@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.ServiceProcess;
@@ -8,10 +7,10 @@ using CompatTelHelper;
 
 namespace CompatTelWatch
 {
-    public partial class Service1 : ServiceBase
+    public partial class WatchService : ServiceBase
     {
         private FileStream _lock;
-        public Service1()
+        public WatchService()
         {
             InitializeComponent();
         }

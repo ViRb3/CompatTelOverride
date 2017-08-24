@@ -3,8 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security.Principal;
 using System.ServiceProcess;
 using System.Threading;
 using System.Windows.Forms;
@@ -15,22 +13,6 @@ namespace CompatTelOverride
     internal static class Program
     {
         public static readonly string ThisFile = Assembly.GetEntryAssembly().Location;
-
-        [DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool DeleteFile(string name);
-
-        private static bool Unblock(string fileName)
-        {
-            return DeleteFile(fileName + ":Zone.Identifier");
-        }
-
-        private static bool IsAdministrator()
-        {
-            var identity = WindowsIdentity.GetCurrent();
-            var principal = new WindowsPrincipal(identity);
-            return principal.IsInRole(WindowsBuiltInRole.Administrator);
-        }
 
         private static void Main(string[] args)
         {
@@ -67,16 +49,18 @@ namespace CompatTelOverride
         private static void Install()
         {
             string[] myFiles = {"CompatTelWatch.exe"};
-            Directory.SetCurrentDirectory(Path.GetDirectoryName(ThisFile));
+            string binPath = Path.Combine(Path.GetDirectoryName(ThisFile), "bin");
 
-            if (!myFiles.Any(File.Exists))
+            if (myFiles.Any(f => !File.Exists(Path.Combine(binPath, f))))
             {
                 MessageBox.Show("Files are missing! Please get a new copy of this software.", "Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 return;
             }
 
-            if (!IsAdministrator())
+            Directory.SetCurrentDirectory(binPath);
+
+            if (!Common.IsAdministrator())
             {
                 MessageBox.Show("Insufficient privileges, please restart this executable as Administrator.", "Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -102,7 +86,7 @@ namespace CompatTelOverride
                 UninstallWatch();
 
             File.Copy("CompatTelWatch.exe", Common.WatchFile);
-            Unblock(Common.WatchFile);
+            NativeImports.Unblock(Common.WatchFile);
             FileUtils.RestorePermissions(Common.WatchFile);
 
             var installer = Process.Start(Common.InstallUtil, Common.WatchFile);
@@ -126,7 +110,7 @@ namespace CompatTelOverride
                 FileUtils.TakeOwnership(Common.RemoteFileOverride);
 
             File.Copy(ThisFile, Common.RemoteFileOverride, true);
-            Unblock(Common.RemoteFileOverride);
+            NativeImports.Unblock(Common.RemoteFileOverride);
             FileUtils.RestorePermissions(Common.RemoteFileOverride);
         }
 
@@ -154,7 +138,7 @@ namespace CompatTelOverride
 
         private static bool Uninstall()
         {
-            if (!IsAdministrator())
+            if (!Common.IsAdministrator())
             {
                 MessageBox.Show("Insufficient privileges, please restart this executable as Administrator.", "Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Security.Principal;
 
 namespace CompatTelHelper
 {
@@ -23,13 +24,20 @@ namespace CompatTelHelper
 
             foreach (Process process in processes)
             {
-                if (string.Equals(process.MainModule.FileName, RemoteFile, StringComparison.OrdinalIgnoreCase)
+                if (string.Equals(Path.GetFileNameWithoutExtension(process.MainModule.FileName), name, StringComparison.OrdinalIgnoreCase)
                     && process.Id != thisProcess.Id)
                 {
                     process.Kill();
                     process.WaitForExit();
                 }
             }
+        }
+
+        public static bool IsAdministrator()
+        {
+            var identity = WindowsIdentity.GetCurrent();
+            var principal = new WindowsPrincipal(identity);
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
     }
 }

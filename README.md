@@ -1,17 +1,14 @@
-### CompatTelOverride v2 - more persistant than ever!
-
-## Intro
-CompatTelRunner telemetry runs very frequently and drains **a lot** of system resources. Even if the file is deleted, Windows will re-install it in a while.
+### CompatTelOverride v2
 
 ## Description
+CompatTelRunner is a telemetry feature in Windows 10 that runs periodically and drains considerable system resources. This causes old hardware to hang and freeze during the process, often for up to 5 minutes. CompatTelOverride disables this telemetry and makes sure it stays that way.
+
+## Technical details
 This project has three modules: an installer, an override (dummy exe), and a service.
 
-The installer (*'CompatTelOverride.exe'*) will manage installation and uninstallation of this project.
-Once installed, the service (*'CompatTelWatch.exe'*) will replace the original *'CompatTelRunner.exe'* with a dummy one that, if started, will sleep forever, preventing telemetry.
-This will happen every boot, so even if Windows replaces the file, it will get reverted. The service also locks the telemetry runner, so it doesn't get modified while Windows is running.
-
-## Why I made this
-It all started when my father and two grandmothers began complaining about their computers being unusable. When I diagnosed them, on each of those 3 machines I noticed something identical - *'CompatTelRunner'* had taken almost all of their limited CPU, HDD and Network resources. While I understand the reason behind this functionality, it's unbearable to watch your computer frozen and unusable for up to 5 minutes every now and then.
+The installer (*CompatTelOverride.exe*) manages installation and uninstallation of this project.
+Once installed, the service (*CompatTelWatch.exe*) replaces the original *CompatTelRunner.exe* with a dummy one that, if started, will sleep forever, preventing telemetry.
+This happens on every boot, so even if Windows replaces the file, it will get reverted. The service also locks the telemetry runner, so it doesn't get modified while Windows is running.
 
 ## Features
 * Automatic ownership/permission handling
@@ -20,16 +17,16 @@ It all started when my father and two grandmothers began complaining about their
 * Uninstallation support
 
 ## How to install
-1. Run *'CompatTelOverride.exe'* as Administrator
-2. Click 'Yes' when prompted to install.
+1. Run *CompatTelOverride.exe* as Administrator
+2. Click *Yes* when prompted to install.
 
 ## How to uninstall
-1. If already installed, re-run *'CompatTelOverride.exe'* as Administrator
-2. Click 'Yes' when prompted to uninstall.
-3. Click 'No' when prompted to re-install.
+1. If already installed, re-run *CompatTelOverride.exe* as Administrator
+2. Click *Yes* when prompted to uninstall.
+3. Click *No* when prompted to re-install.
 
 ## How to force uninstall
-1. Run *'CompatTelOverride.exe'*, as Administrator, with argument: *'/uninstall'*
+1. Run *CompatTelOverride.exe*, as Administrator, with argument: */uninstall*
 
 ---
 

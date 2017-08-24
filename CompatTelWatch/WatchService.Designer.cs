@@ -1,6 +1,6 @@
 ﻿namespace CompatTelWatch
 {
-    partial class Service1
+    partial class WatchService
     {
         /// <summary> 
         /// Required designer variable.
