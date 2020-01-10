@@ -1,5 +1,21 @@
 # CompatTelOverride v2
 
+## Note
+CompatTelOverride is now obsolete!
+
+Here is a better, safer alternative:
+```reg
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\compattelrunner.exe]
+"Debugger"="systray.exe"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\wsqmcons.exe]
+"Debugger"="systray.exe"
+```
+
+---
+
 ## Description
 CompatTelRunner is a telemetry feature in Windows 10 that runs periodically and drains considerable system resources. This causes old hardware to hang and freeze during the process, often for up to 5 minutes. CompatTelOverride disables this telemetry and makes sure it stays that way.
 
